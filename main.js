@@ -36,7 +36,7 @@ ReactDOM.render(
   document.querySelector('#root4')
 )
 
-//state
+//state 변경 방법
 class StateComponent extends React.Component{
   state = {
     count: 0,
@@ -49,9 +49,9 @@ class StateComponent extends React.Component{
   componentDidMount() {
     setTimeout(() => {
       //#1. 일반식
-      // this.setState({
-      //   count: this.state.count + 1,
-      // })
+      this.setState({
+        count: this.state.count + 1,
+      })
 
       //#2. 함수식
       this.setState((previousState) => {
@@ -63,3 +63,31 @@ class StateComponent extends React.Component{
 }
 
 ReactDOM.render(<StateComponent/>, document.querySelector('#root5'))
+
+//event handler
+class EventComponent extends React.Component{
+  state = {
+    count: 0
+  }
+  constructor(props){
+    super(props)
+    this.click = this.click.bind(this) 
+  }
+  render() {
+    return (
+      <div>
+        <p>{this.state.count}</p>
+        <button onClick={this.click}>클릭</button>
+      </div>
+    )
+  }
+  click() {
+    console.log("clicked")
+    this.setState((state) => ({
+      ...state, // ... = 매개변수 복사
+      count: state.count +1
+    }))
+  }
+}
+
+ReactDOM.render(<EventComponent />, document.querySelector("#root6"))
